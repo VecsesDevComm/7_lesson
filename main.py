@@ -5,7 +5,7 @@ from algorithms.data_structures import graph
 from algorithms.max import max
 from algorithms.min import min
 from algorithms.sum import sum
-from algorithms.search import search
+from algorithms.search import search, binary_search
 from algorithms.sort import bubble
 from algorithms.paths import find_path, find_shortest_path
 
@@ -80,9 +80,19 @@ def search_teszt():
     return search(adatok, 1)
 
 
+# Bináris keresés
+def binary_search_teszt():
+    adatok = [2, 4, 1, 5, 6, 7, 10]
+    rendezve = bubble(adatok)
+
+    poz = binary_search(rendezve, 6)
+    return poz, adatok, adatok[poz]
+
+
 # Rendezés
 def sort_teszt():
     adatok = [3, 1, 5, 1, 6, 10, 11, 12, 45, -1, 0, 3]
     return bubble(adatok)
 
-print(sort_teszt())
+
+print(binary_search_teszt())
