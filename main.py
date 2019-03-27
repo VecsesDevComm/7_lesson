@@ -84,3 +84,5 @@ def search_teszt():
 def sort_teszt():
     adatok = [3, 1, 5, 1, 6, 10, 11, 12, 45, -1, 0, 3]
     return bubble(adatok)
+
+print(sort_teszt())

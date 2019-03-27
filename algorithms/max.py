@@ -10,11 +10,14 @@ def max(items):
 
 
 def max_generic(items, comparator):
-    m = items[0]
+    m = [items[0]]
     n = len(items)
-    i = 0
+    i = 1
     while i < n:
-        if comparator(items[i], m) == 1:
-            m = items[i]
+        cmp = comparator(items[i], m[0])
+        if cmp == 1:
+            m = [items[i]]
+        elif cmp == 0:
+            m.append(items[i])
         i = i + 1
     return m

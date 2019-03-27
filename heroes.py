@@ -1,27 +1,27 @@
 from algorithms.max import max_generic
 from algorithms.min import min_generic
-
+from algorithms.sort import bubble_generic
 
 heroes = [
     {
         'name': 'Tony Stark',
         'alias': 'Iron Man',
         'skill': 'Gazdag and Okos',
-        'level': 7,
+        'level': 6,
         'kinezet': 5
     },
     {
         'name': 'Steve Rogers',
         'alias': 'Captain America',
         'skill': 'Szóó Páverful',
-        'level': 6,
+        'level': 5,
         'kinezet': 8
     },
     {
         'name': 'Scarlet Witch',
         'alias': 'Wanda Maximoff',
         'skill': 'Mindstone',
-        'level': 8,
+        'level': 9,
         'kinezet': 8
     },
     {
@@ -29,7 +29,7 @@ heroes = [
         'alias': 'Natasha Alianovna Romanoff',
         'skill': 'Csinos és gyilkos',
         'level': 5,
-        'kinezet': 9
+        'kinezet': 10
     },
     {
         'name': 'Thor',
@@ -65,22 +65,22 @@ def kinezet_alapjan(h1, h2):
 
 
 def get_max_level_hero():
-    hero = max_generic(heroes, szint_alapjan)
-    return hero
+    max_level_heroes = max_generic(heroes, szint_alapjan)
+    return max_level_heroes
 
 
 def get_sexiest_hero():
-    hero = max_generic(heroes, kinezet_alapjan)
-    return hero
+    sexiest_heroes = max_generic(heroes, kinezet_alapjan)
+    return sexiest_heroes
 
 def get_min_level_hero():
-    hero = min_generic(heroes, szint_alapjan)
-    return hero
+    weakest_heroes = min_generic(heroes, szint_alapjan)
+    return weakest_heroes
 
 
 def get_ugliest_hero():
-    hero = min_generic(heroes, kinezet_alapjan)
-    return hero
+    unattractive_heroes = min_generic(heroes, kinezet_alapjan)
+    return unattractive_heroes
 
 
 def fight(h1, h2):
@@ -91,14 +91,23 @@ def fight(h1, h2):
     else:
         return None
 
+def print_heroes(hlist):
+    for h in hlist:
+        print(h['name'], 'szint:', h['level'], 'külső:', h['kinezet'])
 
-print('Legerősebb', get_max_level_hero()['name'])
-print('Legszexibb', get_sexiest_hero()['name'])
-print('Legcsúnyább', get_ugliest_hero()['name'])
-print('Leggyengébb', get_min_level_hero()['name'])
 
-weakest = get_min_level_hero()
-ugliest = get_ugliest_hero()
+
+print('Legerősebbek')
+print_heroes(get_max_level_hero())
+print('Legszexibbek')
+print_heroes(get_sexiest_hero())
+print('Legcsúnyábbak')
+print_heroes(get_ugliest_hero())
+print('Leggyengébbek')
+print_heroes(get_min_level_hero())
+
+weakest = get_min_level_hero()[0]
+ugliest = get_ugliest_hero()[0]
 winner = fight(weakest, ugliest)
 
 print('harc', weakest['name'], 'és', ugliest['name'], 'között')
@@ -106,3 +115,8 @@ if winner is not None:
     print('Győztes', winner['name'])
 else:
     print('Döntetlen')
+
+
+print('=====================')
+bubble_generic(heroes, szint_alapjan)
+print_heroes(heroes)

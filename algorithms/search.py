@@ -4,6 +4,5 @@ def search(items, x):
             return item
     return None
 
-
 def search_generic(items, comparator):
     return None
