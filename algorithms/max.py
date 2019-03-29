@@ -21,3 +21,18 @@ def max_generic(items, comparator):
             m.append(items[i])
         i = i + 1
     return m
+
+def max_by_key(items, key):
+    m = [items[0]]
+    n = len(items)
+    i = 1
+
+    while i < n:
+        if items[i] > m[0][key]:
+            m = [items[i]]
+        elif items[i] == m[0][key]:
+            m.append(items[i])
+        
+        i = i + 1
+
+    return m
