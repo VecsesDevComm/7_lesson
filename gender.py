@@ -1,6 +1,8 @@
 import os.path
+import sys
 import copy
 import csv
+import argparse
 
 from algorithms.max import max_generic, max_by_key
 from algorithms.min import min_generic
@@ -146,14 +148,47 @@ def print_year_data_graph(year_data, key):
         print("|" + country + "|" + str(value) + " " + (value * "#"))
         
 
-
 def print_keys(year_data):
     for k in year_data[0]:
         print(k)
 
 
-y2005 = read_year_data('2005')
-y2005 = convert_values_to_floats(y2005)
-y2005_order_by_money = order_records(y2005, money_comparator)
-print_year_data_graph(y2005_order_by_money, money)
+def maximums(args):
+    year = args.year
+    metrics = args.metrics
+    print(args)
+
+
+def minimums(args):
+    year = args.year
+    metrics = args.metrics
+    print(args)
+
+
+def find_country(args):
+    year = args.year
+    country = args.country
+    print(args)
+
+
+def order(args):
+    year = args.year
+    metric = args.metric
+    table = args.table
+    graph = args.graph
+    print(args)
+
+
+parser = argparse.ArgumentParser(description='Statistics Reader')
+parser.add_argument('--print-metrics', '-pm', action='store_true', dest='print_keys', help='Lista a metrikákról')
+
+commands = parser.add_subparsers()
+
+parser_maximums = commands.add_parser('maximums', help='Maximum keresése az adott évben az adott metrikák szerint')
+parser_maximums.add_argument('year', action='store', help='Válaszd ki az évet')
+parser_maximums.add_argument('-m', action='append', dest='metrics', default=[], help='Metrikák')
+parser_maximums.set_defaults(func=maximums)
+
+args = parser.parse_args(sys.argv[1:])
+args.func(args)
 
