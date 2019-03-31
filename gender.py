@@ -210,5 +210,13 @@ parser_country.set_defaults(func=find_country)
 
 
 
-args = parser.parse_args(sys.argv[1:])
-args.func(args)
+# args = parser.parse_args(sys.argv[1:])
+# args.func(args)
+
+def rendez_work_szerint(year):
+    return bubble_by_key(year, 'WORK')
+
+year_data = read_year_data('2012')
+year_data = convert_values_to_floats(year_data)
+rendezve = rendez_work_szerint(year_data)
+print_year_data_table(rendezve)

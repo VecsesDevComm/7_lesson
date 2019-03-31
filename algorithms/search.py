@@ -1,9 +1,15 @@
-def search(items, x):
-    for index, item in enumerate(items):
-        if item == x:
-            return index
-    return -1
+def search(items, value):
+    for item in items:
+        if item == value:
+            return item
+    return None
 
+# search_by_key(y2005, 'Country', 'HU')
+def search_by_key(items, key, value):
+    for item in items:
+        if item[key] == value:
+            return item
+    return None
 
 def binary_search(items, item):
     n = len(items)
