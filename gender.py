@@ -3,10 +3,11 @@ import sys
 import copy
 import csv
 import argparse
+import pprint
 
 from algorithms.max import max_generic, max_by_key
-from algorithms.min import min_generic
-from algorithms.sort import bubble_generic
+from algorithms.min import min_generic, min_by_key
+from algorithms.sort import bubble_generic, bubble_by_key
 from algorithms.search import search_generic
 
 stats = os.path.join(os.path.dirname(__file__), 'statistics')
@@ -233,5 +234,12 @@ parser_country.add_argument(
 
 
 
-args = parser.parse_args(sys.argv[1:])
-args.func(args)
+# args = parser.parse_args(sys.argv[1:])
+# args.func(args)
+
+y2005 = read_year_data('2005')
+y2005 = convert_values_to_floats(y2005)
+max_time = max_by_key(y2005, time)
+min_time = min_by_key(y2005, time)
+y2005_ordered = bubble_by_key(y2005, time)
+print_year_data_table(y2005_ordered)
