@@ -204,10 +204,6 @@ parser_country = commands.add_parser(
 parser_country.add_argument(
     '-c', action='append', dest='countries', default=[], help='Országok'
 )
-parser_country.add_argument(
-    '-o', '--order', action='store', dest='order',
-    default='Gender Equality Index', help='Rendezési metrika'
-)
 parser_country.set_defaults(func=find_country)
 
 # Order
