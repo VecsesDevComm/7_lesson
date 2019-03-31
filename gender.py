@@ -60,45 +60,6 @@ def compare_fields(r1_field, r2_field):
         return 0
 
 
-def gender_equality_index_comparator(r1, r2):
-    r1_field = r1['Gender Equality Index']
-    r2_field = r2['Gender Equality Index']
-    return compare_fields(r1_field, r2_field)
-
-
-def work_comparator(r1, r2):
-    r1_field = r1['WORK']
-    r2_field = r2['WORK']
-    return compare_fields(r1_field, r2_field)
-
-
-def money_comparator(r1, r2):
-    r1_field = r1['MONEY']
-    r2_field = r2['MONEY']
-    return compare_fields(r1_field, r2_field)
-
-
-def order_records(year_data, comparator):
-    copied_list = copy.deepcopy(year_data)
-    return bubble_generic(copied_list, comparator)
-
-
-def find_record_by_key(year_data, comparator):
-    return search_generic(year_data, comparator)
-
-
-def find_maximum(year_data, comparator):
-    return max_generic(year_data, comparator)
-
-
-def find_maximum_by_key(year_data, key):
-    return max_by_key(year_data, key)
-
-
-def find_minimum(year_data, comparator):
-    return min_generic(year_data, comparator)
-
-
 def print_year_data(year_data, key):
     print('Country\t', key)
     for yd in year_data:
