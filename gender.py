@@ -8,7 +8,7 @@ import pprint
 from algorithms.max import max_generic, max_by_key
 from algorithms.min import min_generic, min_by_key
 from algorithms.sort import bubble_generic, bubble_by_key
-from algorithms.search import search_generic
+from algorithms.search import search_generic, search_by_key
 
 stats = os.path.join(os.path.dirname(__file__), 'statistics')
 
@@ -127,19 +127,38 @@ def print_keys(year_data):
 def maximums(args):
     year = args.year
     metrics = args.metrics
-    print(args)
+    
+    year_data = read_year_data(year)
+    year_data = convert_values_to_floats(year_data)
+    for metric in metrics:
+        print(metric)
+        maximum = max_by_key(year_data, metric)
+        print_year_data_table(maximum)
 
 
 def minimums(args):
     year = args.year
     metrics = args.metrics
-    print(args)
+    
+    year_data = read_year_data(year)
+    year_data = convert_values_to_floats(year_data)
+    for metric in metrics:
+        print(metric)
+        minimum = min_by_key(year_data, metric)
+        print_year_data_table(minimum)
 
 
 def find_country(args):
     year = args.year
     countries = args.countries
-    print(args)
+    
+    year_data = read_year_data(year)
+    year_data = convert_values_to_floats(year_data)
+    for country in countries:
+        key = 'Country'
+        value = country
+        adat = search_by_key(year_data, key, country)
+        print_year_data_table([adat])
 
 
 def order(args):
@@ -189,18 +208,11 @@ parser_country.add_argument(
     '-o', '--order', action='store', dest='order',
     default='Gender Equality Index', help='Rendezési metrika'
 )
-
+parser_country.set_defaults(func=find_country)
 
 # Order
 
 
 
-# args = parser.parse_args(sys.argv[1:])
-# args.func(args)
-
-y2005 = read_year_data('2005')
-y2005 = convert_values_to_floats(y2005)
-max_time = max_by_key(y2005, time)
-min_time = min_by_key(y2005, time)
-y2005_ordered = bubble_by_key(y2005, time)
-print_year_data_table(y2005_ordered)
+args = parser.parse_args(sys.argv[1:])
+args.func(args)
