@@ -22,6 +22,7 @@ def max_generic(items, comparator):
         i = i + 1
     return m
 
+
 def max_by_key(items, key):
     m = [items[0]]
     n = len(items)

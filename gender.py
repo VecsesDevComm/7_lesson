@@ -18,9 +18,10 @@ health = 'HEALTH'
 know = 'KNOWLEDGE'
 power = 'POWER'
 
+
 def read_year_data(year):
     csv_path = os.path.join(stats, year + '.csv')
-    
+
     if not os.path.exists(csv_path):
         return []
 
@@ -30,7 +31,7 @@ def read_year_data(year):
     csv_reader = csv.DictReader(csv_file)
     for row in csv_reader:
         year_data.append(row)
-    
+
     csv_file.close()
     return year_data
 
@@ -39,13 +40,13 @@ def convert_values_to_floats(year_data):
     converted_year_data = []
 
     for record in year_data:
-        for key in record.keys() - { 'Country' }:
+        for key in record.keys() - {'Country'}:
             val = float(record[key].replace(',', '.'))
             rnd = round(val, 3)
             record[key] = rnd
 
         converted_year_data.append(record)
-    
+
     return converted_year_data
 
 
@@ -87,7 +88,7 @@ def find_record_by_key(year_data, comparator):
 
 def find_maximum(year_data, comparator):
     return max_generic(year_data, comparator)
-    
+
 
 def find_maximum_by_key(year_data, key):
     return max_by_key(year_data, key)
@@ -105,7 +106,7 @@ def print_year_data(year_data, key):
 
 def print_year_data_table(year_data):
     columns = ('Country', work, money, time, health, know, power)
-    
+
     header = "|"
     border = "+"
     for col in columns:
@@ -118,14 +119,14 @@ def print_year_data_table(year_data):
 
     for record in year_data:
         row = "|"
-        
+
         for column in columns:
             cs = str(record[column]).ljust(10)
             row = row + cs + "|"
-        
+
         print(border)
         print(row)
-    
+
     print(border)
 
 
@@ -146,7 +147,15 @@ def print_year_data_graph(year_data, key):
         country = record['Country'].ljust(10)
         value = round(record[key])
         print("|" + country + "|" + str(value) + " " + (value * "#"))
-        
+
+
+def print_year(args):
+    year = args.year
+
+    data = read_year_data(year)
+    data = convert_values_to_floats(data)
+    print_year_data_table(data)
+
 
 def print_keys(year_data):
     for k in year_data[0]:
@@ -167,7 +176,7 @@ def minimums(args):
 
 def find_country(args):
     year = args.year
-    country = args.country
+    countries = args.countries
     print(args)
 
 
@@ -180,15 +189,49 @@ def order(args):
 
 
 parser = argparse.ArgumentParser(description='Statistics Reader')
-parser.add_argument('--print-metrics', '-pm', action='store_true', dest='print_keys', help='Lista a metrikákról')
+parser.add_argument('year', action='store', help='Válaszd ki az évet')
+parser.add_argument('--print-metrics', '-pm', action='store_true',
+                    dest='print_keys', help='Lista a metrikákról')
+parser.set_defaults(func=print_year)
 
 commands = parser.add_subparsers()
 
-parser_maximums = commands.add_parser('maximums', help='Maximum keresése az adott évben az adott metrikák szerint')
-parser_maximums.add_argument('year', action='store', help='Válaszd ki az évet')
-parser_maximums.add_argument('-m', action='append', dest='metrics', default=[], help='Metrikák')
+# Find Maximums command
+parser_maximums = commands.add_parser(
+    'maxi', help='Maximumok keresése az adott évben az adott metrikák szerint'
+)
+parser_maximums.add_argument(
+    '-m', action='append', dest='metrics', default=[], help='Metrikák'
+)
 parser_maximums.set_defaults(func=maximums)
+
+
+# Find Minimums command
+parser_minimums = commands.add_parser(
+    'mini', help='Minimumok keresése az adott évben adott metrikák szerint'
+)
+parser_minimums.add_argument(
+    '-m', action='append', dest='metrics', default=[], help='Metrikák'
+)
+parser_minimums.set_defaults(func=minimums)
+
+
+# Find Country
+parser_country = commands.add_parser(
+    'country', help='Ország keresése'
+)
+parser_country.add_argument(
+    '-c', action='append', dest='countries', default=[], help='Országok'
+)
+parser_country.add_argument(
+    '-o', '--order', action='store', dest='order',
+    default='Gender Equality Index', help='Rendezési metrika'
+)
+
+
+# Order
+
+
 
 args = parser.parse_args(sys.argv[1:])
 args.func(args)
-
